@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: Dosis;
+  src: url(../../../public/dosis/Dosis\ v1.7/Dosis-SemiBold.ttf) ;
+}

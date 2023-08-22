@@ -1,0 +1,26 @@
+<script setup>
+import NavBarItem from "./NavBarItem.vue";
+import { defineProps, defineEmits } from "vue";
+
+defineProps({
+  menu: {
+    type: Array,
+    default: () => [],
+  },
+});
+
+const emit = defineEmits(["menu-click"]);
+
+const menuClick = (event, item) => {
+  emit("menu-click", event, item);
+};
+</script>
+
+<template>
+  <NavBarItem
+    v-for="(item, index) in menu"
+    :key="index"
+    :item="item"
+    @menu-click="menuClick"
+  />
+</template>
