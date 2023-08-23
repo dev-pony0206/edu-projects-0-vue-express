@@ -1,84 +1,56 @@
 <template>
-  <div class="bg-purple-300">
-  <div class="text-center font-display">
-    <h2 class="text-8xl font-display text-indigo-600 py-32">Great For Your Awesome Products</h2>
-    <div class="p-5 bg-stone-500 rounded-2xl  text-5xl text-green-400 mx-80 relative" v-if="imageFile == null || imageFile.length == 0">
-     Start with Us
-      <input class="font-display text-2xl rounded-xl bg-white w-72" type="file" @change="showImagePreview($event)" accept="image/*" />
-      </div>
-    <div class="p-5 bg-stone-500 rounded-2xl mx-40 flex items-center " v-if="imageFile != null && imageFile.length != 0">
-      <img class="bg-stone-500 rounded-2xl p-1 h-52 m-3 border border-solid border-blue-600 " :src="imageFile" />
-        <div v-if="imageFile != null && imageFile.length != 0 && !isImageUploading" class="block  absolute w-1/2 text-3xl ">
-          <div>
-            <p class="text-4xl text-amber-500">Product Name</p>
-            <input type="text" class="rounded-xl p-2" :value="product.name" placeholder="Enter your new product name"/>
-          </div>
-          <div>
-            <p class="text-4xl text-amber-500">Description</p>
-            <textarea  class="rounded-xl p-2" :value="product.description" placeholder="About new product"></textarea>
-          </div>
-        </div>
+  <div class=" flex justify-center items-center">
+    <div class="bg-fuchsia-400  rounded-3xl">
+    <div class="px-4 py-6 flex justify-center items-center border-b-2 border-white">
+      <h1 class="font-bold text-2xl  text-purple-900 ">My Profile</h1>
     </div>
-    <div v-if="imageFile != null && imageFile.length != 0 && !isImageUploading">
-      <button class="m-3 border-0 text-lg py-4 px-16 font-light bg-emerald-900 rounded-3xl text-yellow-500" v-on:click="clearImage">
-        Cancel
-      </button>
-      <button class="m-3 border-0 text-lg py-4 px-16 font-light bg-emerald-900 rounded-3xl text-yellow-500" v-on:click="registerProduct">
-        Upload
+
+    <!-- body -->
+    <div class="px-4 py-6">
+      <div class="">
+        <ImagePart/>
+      </div>     
+      <b class="text-2xl">Name</b>
+      <input type="text" name="name" id="name"
+        class="rounded-2xl w-full p-3 my-1 shadow-md outline-none text-black text-2xl" :value={name} />
+      <b class="text-2xl">Email</b>
+      <textarea  name="description" id="description" class="rounded-2xl w-full p-3 my-1 shadow-md outline-none text-black text-2xl" :value={description}>
+      </textarea>
+      <button type="submit" class="rounded-2xl bg-purple-800 shadow-md p-3 my-1 w-full text-white text-2xl" @submit.prevent="registerProduct">
+       OK
       </button>
     </div>
-    <div class="bg-stone-500 my-3 mx-96 border-0 text-lg py-4 px-16 font-light text-yellow-500 rounded-3xl" v-if="isImageUploading">
-      Please wait while your product is being uploaded ...
+
+    <!-- footer -->
+    <div class="px-4 py-6 border-t-2 border-white">
+      <p class="text-purple-900  font-bold text-xl">
+        Like this Project? <a href="https://github.com/ChristoperCarter0206/edu-projects-0-nest-vue">GitHub</a>
+      </p>
     </div>
   </div>
 </div>
 </template>
 
 <script>
+import ImagePart from './ImagePart.vue';
 import { useMainStore } from '@/stores/main';
 
-const main = useMainStore();
-const registerProduct = main.registerProduct;
-
 export default {
-  name: "ImageUploader",
-  data() {
-    return {
-      imageFile: null,
-      input: null,
-      isImageUploading: false,
-      product:{
-        name:null,
-        url:null,
-        description:null
-      }
-    };
+  components: { ImagePart },
+  data(){
+    return{
+      name:null,
+      description:null
+    }
   },
-  methods: {
-    showImagePreview(event) {
-      this.input = event.target;
-      if (this.input.files && this.input.files[0]) {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-          this.imageFile = e.target.result;
-        };
-        reader.readAsDataURL(this.input.files[0]);
-      }
-    },
-    uploadImage() {
-      this.isImageUploading = true;
-      setTimeout(() => {
-       registerProduct,
-        this.isImageUploading = false;
-        this.clearImage();
-        alert("Your Product is uploaded successfully!");
-      }, 2000);
-    },
-    clearImage() {
-      this.imageFile = null;
-      this.input = null;
-    },
+  methods:{
+  main(){
+    return useMainStore()
   },
-};
+  registerProduct(){
+    return this.main.registerProduct
+  },
+  },
+  
+}
 </script>
-

@@ -11,7 +11,7 @@ const ProductSchema = new mongoose.Schema({
         required: true,
     },
     image: {
-      type: URL,
+      type: String,
       required: true,
       unique:true
     },
@@ -20,8 +20,7 @@ const ProductSchema = new mongoose.Schema({
         default: Date.now,
     },
     date_u: {
-      type: Date,
-      default: Date.now,
+      type: Date
   },
 });
 

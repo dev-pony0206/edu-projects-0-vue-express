@@ -11,9 +11,7 @@
       <input type="text" name="name" id="name"
         class="rounded-2xl w-full p-3 my-1 shadow-md outline-none text-black text-2xl" :value={name} />
       <b class="text-2xl">Email</b>
-      <input type="email" name="email" id="email" 
-        class="rounded-2xl w-full p-3 my-1 shadow-md outline-none text-black text-2xl" :value={email} />
-    
+      <input type="email" name="email" id="email" class="rounded-2xl w-full p-3 my-1 shadow-md outline-none text-black text-2xl" :value={email}/>
       <button type="button" class="rounded-2xl bg-purple-800 shadow-md p-3 my-1 w-full text-white text-2xl" @click.prevent="confirmProfile">
        OK
       </button>

@@ -51,15 +51,15 @@ export const useMainStore = defineStore("main", {
         });
     },
 
-    registerProduct(product) {
-      axios
-        .post("",product)
-        .then((res) => {
-          console.log(res.data)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+    registerProduct(updateSingle,name,description) {
+      let formData = new FormData();
+        formData.append("updateSingle", updateSingle);
+        formData.append("name", name);
+        formData.append("description", description);
+      axios .post('', formData, {headers: {'Content-Type': 'multipart/form-data'}})
+            .then(response => {
+              console.log(response.data);
+              })
     },
 
     deleteProduct(id) {
