@@ -1,19 +1,20 @@
 <script>
 import EditModal from "./EditModal.vue";
-import {useMainStore} from '@/stores/main';
-import {defineProps} from 'vue';
+// import {useMainStore} from '@/stores/main';
+// import {defineProps} from 'vue';
 
-const main = useMainStore();
-const registerProduct = main.registerProduct;
-const deleteProduct = main.deleteProduct;
+// const main = useMainStore();
+// const registerProduct = main.registerProduct;
+// const deleteProduct = main.deleteProduct;
 
-defineProps({
-  product:{
-    type:Object,
-    required:true,  
-  }
-});
-const url = props.product.url;
+// const props = defineProps({
+//   product:{
+//     type:Object,
+//     required:true,  
+//   }
+// });
+
+// const file = props.product.file;
 
 export default {
   name: "ProductCard",
@@ -23,7 +24,7 @@ export default {
   data() {
     return {
       isModalVisible: false,
-      ImagePreviewURL: url,
+      ImagePreviewURL: null,
     };
   },
   methods: {
@@ -34,11 +35,11 @@ export default {
       this.isModalVisible = false;
     },
     onFileChange(payload) {
-      const image = payload.target.images[0]; // use it in case of normal HTML input
+      const file = payload.target.files[0]; // use it in case of normal HTML input 
       // const image = payload; // in case vuetify file input
-      if (image) {
-        this.imagePreviewURL = URL.createObjectURL(image);
-        URL.revokeObjectURL(image); // free memory
+      if (file) {
+        this.imagePreviewURL = URL.createObjectURL(file);
+        URL.revokeObjectURL(file); // free memory
       } else {
         this.imagePreviewURL =  null
       }

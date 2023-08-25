@@ -23,20 +23,6 @@
 </template>
 
 <script>
-//   import { defineProps, computed } from "vue";
-
-// const props = defineProps({
-// product: {
-//   type: Object,
-//   required: true,
-// },
-// });
-
-// const product = computed((props) => {
-//    editProduct = props.product;
-//    return editProduct;
-// });
-
 export default {
   name: "EditModal",
   methods: {

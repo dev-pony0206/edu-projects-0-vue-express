@@ -2,24 +2,25 @@
   <div class=" flex justify-center items-center">
     <div class="bg-fuchsia-400  rounded-3xl">
     <div class="px-4 py-6 flex justify-center items-center border-b-2 border-white">
-      <h1 class="font-bold text-2xl  text-purple-900 ">My Profile</h1>
+      <h1 class="font-bold text-2xl  text-purple-900 ">New Product</h1>
     </div>
 
     <!-- body -->
-    <div class="px-4 py-6">
+    <form class="px-4 py-6" @submit.prevent="submit"  enctype="multipart/form-data">
       <div class="">
-        <ImagePart/>
-      </div>     
+        <img class="w-80 h-60" v-bind:src="url">
+        <input type="file" @change="chooseFile"  ref="file"/>
+      </div>    
       <b class="text-2xl">Name</b>
       <input type="text" name="name" id="name"
-        class="rounded-2xl w-full p-3 my-1 shadow-md outline-none text-black text-2xl" :value={name} />
-      <b class="text-2xl">Email</b>
-      <textarea  name="description" id="description" class="rounded-2xl w-full p-3 my-1 shadow-md outline-none text-black text-2xl" :value={description}>
+        class="rounded-2xl w-full p-3 my-1 shadow-md outline-none text-black text-2xl" v-model="name" />
+      <b class="text-2xl">Description</b>
+      <textarea  name="description" id="description" class="rounded-2xl w-full p-3 my-1 shadow-md outline-none text-black text-2xl" v-model="description">
       </textarea>
-      <button type="submit" class="rounded-2xl bg-purple-800 shadow-md p-3 my-1 w-full text-white text-2xl" @submit.prevent="registerProduct">
+      <button type="submit" class="rounded-2xl bg-purple-800 shadow-md p-3 my-1 w-full text-white text-2xl" >
        OK
       </button>
-    </div>
+    </form>
 
     <!-- footer -->
     <div class="px-4 py-6 border-t-2 border-white">
@@ -32,25 +33,35 @@
 </template>
 
 <script>
-import ImagePart from './ImagePart.vue';
 import { useMainStore } from '@/stores/main';
 
 export default {
-  components: { ImagePart },
   data(){
     return{
+      image:null,
       name:null,
-      description:null
+      description:null,
+      url:"2.jpg"
     }
   },
   methods:{
-  main(){
-    return useMainStore()
+  registerProduct(data){
+    useMainStore().registerProduct(data)
   },
-  registerProduct(){
-    return this.main.registerProduct
-  },
-  },
-  
-}
+  chooseFile(){
+    this.image = this.$refs.file.files[0];
+    this.url = URL.createObjectURL(this.image);
+  }, 
+  submit() {
+        const formData = new FormData();
+        formData.append('name',this.name  );
+        formData.append('description', this.description);
+        formData.append('file', this.image);
+        this.registerProduct(formData)
+        this.name = null
+        this.image = null
+        this.description = null
+        this.url = "2.jpg"
+  }
+}}
 </script>

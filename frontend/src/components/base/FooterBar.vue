@@ -9,7 +9,7 @@ const year = new Date().getFullYear();
       <div class="text-center md:text-left text-4xl">
         <b
           >&copy;{{ year }}.
-          <a href="https://nest-vue.troncali.com/guide/index.html" class="text-blue-700" target="_blank">Nest-Vue</a>.</b
+          <a href="https://vegibit.com/vue-js-express-tutorial/" class="text-blue-700" target="_blank">Vue-Express</a>.</b
         >
         <slot />
       </div>

@@ -1,8 +1,15 @@
 const express = require('express');
 const connectDB = require('./config/db.js');
 const path = require('path');
+const cors = require("cors");
 
 const app = express();
+
+var corsOptions = {
+  origin: "http://localhost:8080"
+};
+
+app.use(cors(corsOptions));
 
 // Connect Database
 connectDB();
@@ -29,6 +36,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

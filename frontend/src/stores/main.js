@@ -1,78 +1,99 @@
 import { defineStore } from "pinia";
+import { ref } from "vue";
 import router from '../router';
 import axios from "axios";
+import { server } from "@/helper";
+import jwtDecode from "jwt-decode";
 
-export const useMainStore = defineStore("main", {
-  state: () => ({
-    user:{},
-    productList:[],
-  }),
+const API_PATH = server.baseURL;
 
-  actions: {
-    signupUser(user){
+export const useMainStore = defineStore("main",() => {
+
+  const user = ref(null)
+  const productList = ref([])
+
+    function signupUser (payload) {
+      console.log(payload)
       axios
-        .post("",user)
+        .post(`${API_PATH}/api/users/signup`,payload)
         .then((res) => {
           console.log(res);
           router.push('/')
-        })
+        }) 
         .catch((error) => {
-          console.log(error);
+          alert(error.message);
         })
-    },
+    }
 
-    loginUser(user){
+    function loginUser(payload){
+      console.log(payload)
       axios
-        .post("",user)
+        .post("http://localhost:5000/api/auth/login",payload)
         .then((res) => {
-         this.user = res.data.user;
-          localStorage.setItem('user',JSON.stringify(user));
+          const decoded = jwtDecode(res.data.token);
+          console.log('decoded =>', decoded) 
+          $reset(decoded.user)
+          localStorage.setItem('user',JSON.stringify(res.data));
           router.push('/list');
         })
         .catch((error) => {
           alert(error.message);
         })
-    },
+    }
 
-    logoutUser() {
-      this.user = null;
+    function logoutUser() {
+      $reset(null);
       localStorage.removeItem('user');
       router.push('/login');
-    },
+    }
 
-    getProductList() {
+    function getProductList() {
       axios
-        .get("")
+        .get("http://localhost:5000/api/products/get")
         .then((res) => {
-         this.productList = res.data.productList;
+         productList.value = res.data;
         })
         .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    registerProduct(updateSingle,name,description) {
-      let formData = new FormData();
-        formData.append("updateSingle", updateSingle);
-        formData.append("name", name);
-        formData.append("description", description);
-      axios .post('', formData, {headers: {'Content-Type': 'multipart/form-data'}})
-            .then(response => {
-              console.log(response.data);
-              })
-    },
-
-    deleteProduct(id) {
-      axios
-        .delete("",id)
-        .then(res => {
-          console.log(res.data);
-          this.productList.splice(id,1);
-          return this.productList
-        })
-        .catch((error) => {
-          console.log(error);
+          alert(error.message);
         });
     }
-  },
+
+    function registerProduct(payload) {
+      axios .post('http://localhost:5000/api/products/register', payload)
+            .then(res => {
+              console.log(res.data)
+              productList.value.push(res.data)
+              })
+              .catch((error) => {
+                alert(error.message);
+              });
+    }
+
+    function updateProduct(payload){
+      axios
+          .post('http://localhost:5000/api/products/update',payload)
+          .then(res=>{
+            console.log(res.data)
+          })
+          .catch(error=>{
+            alert(error.message)
+          })
+    }
+
+    function deleteProduct(id) {
+      axios
+        .post("http://localhost:5000/api/products/delete",id)
+        .then(() => {
+          productList.value.splice(id,1);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }  
+
+    function $reset(payload) {
+      user.value = payload
+    }
+
+    return{user,productList,signupUser, loginUser,logoutUser,getProductList,registerProduct,deleteProduct,updateProduct,$reset}
 });

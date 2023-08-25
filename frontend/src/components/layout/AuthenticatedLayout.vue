@@ -4,8 +4,8 @@ import { mdiForwardburger, mdiBackburger, mdiMenu } from "@mdi/js";
 import { useRouter } from "vue-router";
 import menuAside from "./menuAside.js";
 import menuNavBar from "./menuNavbar.js";
-// import { useMainStore } from "@/stores/main.js";
 import { useStyleStore } from "@/stores/style.js";
+import { useMainStore } from "@/stores/main.js";
 import BaseIcon from "@/components/base/BaseIcon.vue";
 import FormControl from "@/components/base/FormControl.vue";
 import NavBar from "@/components/base/NavBar.vue";
@@ -15,6 +15,7 @@ import FooterBar from "@/components/base/FooterBar.vue";
 
 const layoutAsidePadding = "xl:pl-60";
 
+const main = useMainStore();
 const styleStore = useStyleStore();
 
 const router = useRouter();
@@ -33,6 +34,8 @@ const menuClick = (event, item) => {
   }
 
   if (item.isLogout) {
+    main.$reset(null);
+    localStorage.removeItem('user');
     router.push('/')
   }
 };

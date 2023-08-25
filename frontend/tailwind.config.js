@@ -9,6 +9,6 @@ module.exports = {
         display: 'Dosis'
     },
   },
-  plugins: [],
+  plugins: [], 
 }
 }

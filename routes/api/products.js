@@ -1,5 +1,4 @@
 const express = require("express");
-// const fileUpload = require("express-fileupload");
 const cors = require("cors");
 
 const upload = require("../../middleware/multer");
@@ -11,15 +10,9 @@ const router = express.Router();
 // middle ware
 express().use(express.static("public")); //to access the files in public folder
 express().use(cors()); // it enables all cors requests
-// express().use(fileUpload());
 
-router.post(
-  "/register",
-   upload.single("file"),
-   async (req, res) => {
-
+router.post("/register", upload.single("file"), async (req, res) => {
   const product = new Product({
-
     name: req.body.name,
     description: req.body.description,
     image: req.file.filename
@@ -27,11 +20,10 @@ router.post(
 
   product.save();
 
-  res.json("success");
+  res.json(product);
 });
 
 router.get("/get", async (req, res) => {
-
   try {
     const filter = {};
 
@@ -39,53 +31,39 @@ router.get("/get", async (req, res) => {
 
     if (products) {
       return res.send(products);
-    };
+    }
 
-    res.send("no products");  
-
+    res.send("no products");
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
   }
-  
-}); 
+});
 
+router.post("/update", upload.single("file"), async (req, res) => {
+  const id = req.body.id;
 
-router.post(
-  "/update",
-  upload.single("file"),
-  async (req, res) => {
+  const product = await Product.findByIdAndUpdate(id, {
+    name: req.body.name,
+    description: req.body.description,
+    image: req.file.filename,
+    date_u: Date.now()
+  });
 
-        const id = req.body.id;
+  product.save();
+  res.json("success");
+});
 
-       const product = await Product.findByIdAndUpdate(id,{
-          name: req.body.name,
-          description: req.body.description,
-          image: req.file.filename,
-          date_u:Date.now()
-        });
- 
-        console.log(req.body);  
-        console.log(product);
-        product.save(); 
-        res.json("success"); 
-    } 
-);
-
-router.post(
-  "/delete",
-   async (req, res) => {
-
+router.post("/delete", async (req, res) => {
   try {
     let product = await Product.findByIdAndDelete(req.body.id);
-    
+
     if (!product) {
-      res.send("no product"); 
+      res.send("no product");
       return;
     }
 
-    res.send("success"); 
-
+    res.send("success");
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

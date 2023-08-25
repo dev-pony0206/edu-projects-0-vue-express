@@ -9,9 +9,9 @@
     <div class="px-4 py-6">
       <b class="text-2xl">Name</b>
       <input type="text" name="name" id="name"
-        class="rounded-2xl w-full p-3 my-1 shadow-md outline-none text-black text-2xl" :value={name} />
+        class="rounded-2xl w-full p-3 my-1 shadow-md outline-none text-black text-2xl" :value="main.user.name" />
       <b class="text-2xl">Email</b>
-      <input type="email" name="email" id="email" class="rounded-2xl w-full p-3 my-1 shadow-md outline-none text-black text-2xl" :value={email}/>
+      <input type="email" name="email" id="email" class="rounded-2xl w-full p-3 my-1 shadow-md outline-none text-black text-2xl" :value="main.user.email"/>
       <button type="button" class="rounded-2xl bg-purple-800 shadow-md p-3 my-1 w-full text-white text-2xl" @click.prevent="confirmProfile">
        OK
       </button>
@@ -29,23 +29,9 @@
 
 <script setup>
 import {useRouter} from 'vue-router';
-import { defineProps,computed } from 'vue';
+import {useMainStore} from '../../stores/main';
 
-defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
-});
-
-const name = computed((props) => {
-  return props.user.name;
-});
-
-const email = computed((props) => {
-  return props.user.email;
-});
-
+const main = useMainStore();
 
 const router = useRouter();
 
