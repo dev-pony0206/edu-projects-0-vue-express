@@ -8,8 +8,8 @@
     <!-- body -->
     <form class="px-4 py-6" @submit.prevent="submit"  enctype="multipart/form-data">
       <div class="">
-        <img class="w-80 h-60" v-bind:src="url">
-        <input type="file" @change="chooseFile"  ref="file"/>
+        <img class="w-80 h-60 mx-auto" v-bind:src="url">
+        <input type="file" class="rounded-full mt-1 mx-auto" @change="chooseFile"  ref="file"/>
       </div>    
       <b class="text-2xl">Name</b>
       <input type="text" name="name" id="name"
@@ -38,9 +38,9 @@ import { useMainStore } from '@/stores/main';
 export default {
   data(){
     return{
-      image:null,
-      name:null,
-      description:null,
+      image:'',
+      name:'',
+      description:'',
       url:"2.jpg"
     }
   },
@@ -58,9 +58,9 @@ export default {
         formData.append('description', this.description);
         formData.append('file', this.image);
         this.registerProduct(formData)
-        this.name = null
-        this.image = null
-        this.description = null
+        this.name = ''
+        this.image = ''
+        this.description = ''
         this.url = "2.jpg"
   }
 }}

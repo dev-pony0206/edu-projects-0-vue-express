@@ -2,7 +2,6 @@
 import { ref, computed, defineProps, defineEmits } from "vue";
 import { RouterLink } from "vue-router";
 import { useStyleStore } from "@/stores/style.js";
-import { mdiMinus, mdiPlus } from "@mdi/js";
 import AsideMenuList from "./AsideMenuList.vue";
 
 const props = defineProps({
@@ -48,14 +47,6 @@ const menuClick = (event) => {
       :class="componentClass"
       @click="menuClick"
     >
-      <BaseIcon
-        v-if="item.icon"
-        :path="item.icon"
-        class="flex-none"
-        :class="[vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : '']"
-        w="w-16"
-        :size="18"
-      />
       <span
         class="grow text-ellipsis line-clamp-1"
         :class="[
@@ -64,13 +55,6 @@ const menuClick = (event) => {
         ]"
         >{{ item.label }}</span
       >
-      <BaseIcon
-        v-if="hasDropdown"
-        :path="isDropdownActive ? mdiMinus : mdiPlus"
-        class="flex-none"
-        :class="[vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : '']"
-        w="w-12"
-      />
     </component>
     <AsideMenuList
       v-if="hasDropdown"

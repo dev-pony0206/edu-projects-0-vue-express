@@ -61,8 +61,8 @@ import { useMainStore } from '@/stores/main';
 const main = useMainStore();
 
 const user = {
-  name: null,
-  email: null,
-  password: null
+  name: '',
+  email: '',
+  password: ''
 }
 </script>

@@ -1,4 +1,5 @@
 <template>
+  
   <div class=" flex justify-center items-center">
     <div class="bg-fuchsia-400  rounded-3xl">
     <div class="px-4 py-6 flex justify-center items-center border-b-2 border-white">
@@ -25,9 +26,12 @@
     </div>
   </div>
 </div>
+
 </template>
 
+
 <script setup>
+
 import {useRouter} from 'vue-router';
 import {useMainStore} from '../../stores/main';
 
@@ -38,4 +42,5 @@ const router = useRouter();
 const confirmProfile = () => {
   router.push('/list')
 }
+
 </script>

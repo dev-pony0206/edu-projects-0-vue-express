@@ -16,12 +16,8 @@ const pinia = createPinia();
 createApp(App).use(router).use(pinia).mount("#app");
 
 /* Init Pinia stores */
-const mainStore = useMainStore(pinia);
+useMainStore(pinia);
 const styleStore = useStyleStore(pinia);
-
-/* Fetch sample data */
-mainStore.fetch("profile");
-mainStore.fetch("productList");
 
 /* Dark mode */
 if (

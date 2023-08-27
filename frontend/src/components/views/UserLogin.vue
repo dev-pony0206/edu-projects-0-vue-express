@@ -13,12 +13,12 @@
               <div class="mb-3">
                 <label class="text-xs text-gray-600" for="">Email Address</label>
                 <input class="w-full px-4 py-1 bg-gray-100 focus:outline-none border border-gray-400 rounded-full"
-                   type="email" placeholder="Enter your Email Address" v-on:input="(e)=>user.email=e.target.value">
+                  type="email" placeholder="Enter your Email Address" v-on:input="(e) => user.email = e.target.value">
               </div>
               <div class="mb-3">
                 <label class="text-xs text-gray-600" for="">Password</label>
                 <input class="w-full px-4 py-1 bg-gray-100 focus:outline-none border border-gray-400 rounded-full"
-                   type="password" placeholder="Type your Password" v-on:input="(e)=>user.password=e.target.value">
+                  type="password" placeholder="Type your Password" v-on:input="(e) => user.password = e.target.value">
               </div>
               <div class="mb-4">
                 <input type="submit"
@@ -26,7 +26,7 @@
                   value="Sign in" />
                 <input type="button"
                   class="bg-purple-600 mb-2 text-white  flex items-center justify-center font-normal hover:bg-indigo-500 leading-8 w-full rounded-full"
-                  value="Create an account"  @click.prevent="createAccount"/>
+                  value="Create an account" @click.prevent="createAccount" />
               </div>
               <div class="text-center">
                 <a class="hover:text-purple-500 underline text-gray-600" href="">Forgot Password?</a>
@@ -53,6 +53,7 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import { useMainStore } from '@/stores/main';
 import router from '@/router';
 
@@ -61,7 +62,12 @@ const main = useMainStore();
 const createAccount = () => router.push('/signup');
 
 const user = {
-  email: null,
-  password: null
+  email: '',
+  password: ''
 }
+
+onMounted(() => {
+  useMainStore().getProductList()
+});
+
 </script>
